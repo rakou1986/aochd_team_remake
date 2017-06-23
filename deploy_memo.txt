@@ -1,0 +1,64 @@
+さくらのレンタルサーバー、スタンダードでデプロイするメモ
+
+python環境つくる
+http://tech.motop3j.net/archives/45
+
+git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+
+.zshrcに追記
+"""
+export TMPDIR=$HOME/tmp
+if [ "$(uname)" = "Darwin" ]; then
+  if which pyenv > /dev/null; then
+    export CFLAGS="-I$(xcrun --show-sdk-path)/usr/include"
+    export PYENV_ROOT="${HOME}/.pyenv"
+    export PATH=${PYENV_ROOT}/shims:${PATH}
+    eval "$(pyenv init -)";
+  fi
+else
+  if [ -f "$HOME/.pyenv/bin/pyenv" ]; then
+    export PYENV_ROOT="${HOME}/.pyenv"
+    export PATH=${PYENV_ROOT}/bin:$PATH
+    eval "$(pyenv init -)";
+  fi
+fi
+"""
+
+source ~/.zshrc
+pyenv install 3.4.2
+mkdir ~/tmp/python
+cd ~/tmp/python
+python -V
+  Python 2.7.6
+
+pyenv local 3.4.2
+python -V
+  Python 3.4.2
+
+git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+pyenv virtualenv 3.4.2 3.4.2-flask
+pyenv local 3.4.2-flask
+pip install Flask
+pip install ipython
+
+Hello World:
+下記のファイル3つを~/www/flask/hello/に配置すると
+http://<username>.sakura.ne.jp/flask/hello/でアクセス可能
+
+index.cgi
+#!/home/<username>/.pyenv/versions/3.4.2-flask/bin/python
+from wsgiref.handlers import CGIHandler
+from appFlask import app
+CGIHandler().run(app)
+
+appFlask.py
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def index():
+  return "Hello!"
+
+.htaccess
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /flask/hello/index.cgi/$1 [QSA,L]
