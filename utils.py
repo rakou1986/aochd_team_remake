@@ -40,8 +40,9 @@ def convert_natural_radix_10_to_n(x, n):
     x = int(x / n)
   return result
 
+# 任意の人数でチーム分け。8人未満対応
 def _team_assign(players):
-  pop = len(players)
+  pop = len(players) # 参加人数
 
   #奇数の場合人数の多い方を理想レートに近づける
   num_of_digits = pop - int(pop / 2.0)
