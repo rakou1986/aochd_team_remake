@@ -1,0 +1,22 @@
+<html>
+  <h1>AoCHD.jp チーム再編成ツール(非公式)</h1>
+  <p>レート差が最小になるようにチームを組み替える</p>
+  <form action="/aochd/team_remake/" method="POST">
+    <dl>
+      <dt>チームを貼り付けて送信
+      <dd><textarea name="aochd_team_str" rows="5" cols="50"></textarea>
+      <dd><input type="submit">
+    </dl>
+  </form>
+  {% if aochd_team_str %}
+  <dl>
+
+    <dt>変更前:
+    <dd>{{ aochd_team_str }}
+
+    <dt>変更後:
+    <dd>{{ remaked }}
+
+  </dl>
+  {% endif %}
+</html>
