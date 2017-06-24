@@ -6,7 +6,7 @@ def team_assign(aochd_team_str):
   aochd_str = _make_aochd_string(team1, team2)
   return aochd_str
 
-# 10進数x（自然数）をn進数に変換する関数
+# 10進数x（自然数）をn進数(2 ≦ n ≦ 16)に変換する関数
 def convert_natural_radix_10_to_n(x, n):
   if x < 0: return None
   if n < 2 or 16 < n: return None
