@@ -63,18 +63,27 @@ def _make_aochd_string(team1, team2):
   l.append(u"チーム1:")
   l.append(u"【%s】" % sum([player[1] for player in team1]))
   for player in team1:
-    l.append(u"%s(%s)" % player)
+    if player[2] == 1:
+      l.append(u"%s(%s)" % player[:2])
+    else:
+      l.append(u"<<<%s(%s)>>>" % player[:2])
   l.append(u"チーム2:")
   l.append(u"【%s】" % sum([player[1] for player in team2]))
   for player in team2:
-    l.append(u"%s(%s)" % player)
+    if player[2] == 2:
+      l.append(u"%s(%s)" % player[:2])
+    else:
+      l.append(u"<<<%s(%s)>>>" % player[:2])
   return u" ".join(l)
 
 def _get_players(aochd_team_str):
   players = []
+  team = 0
   for s in aochd_team_str.split():
+    if u"】" in s:
+      team += 1
     if "(" in s:
       name = s.split("(")[0]
       rate = int(s.split("(")[1].split(")")[0])
-      players.append((name, rate))
+      players.append((name, rate, team))
   return players
