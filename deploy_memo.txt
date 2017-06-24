@@ -6,7 +6,6 @@ http://tech.motop3j.net/archives/45
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv
 
 .zshrcに追記
-"""
 export TMPDIR=$HOME/tmp
 if [ "$(uname)" = "Darwin" ]; then
   if which pyenv > /dev/null; then
@@ -22,7 +21,8 @@ else
     eval "$(pyenv init -)";
   fi
 fi
-"""
+
+---
 
 source ~/.zshrc
 pyenv install 3.4.2

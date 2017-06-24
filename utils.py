@@ -61,7 +61,7 @@ def _team_assign(players):
       ideal_degree = abs(ideal - sum([rates[idx] for idx in idx_one_by_one]))
       idx_and_IdealDegree.append((idx_one_by_one, ideal_degree))
   # 理想との差が少ない順にソート
-  idx_and_IdealDegree.sort(key=lambda element: element[1])
+  idx_and_IdealDegree.sort(key=lambda tuple_of_idx_and_IdealDigree: tuple_of_idx_and_IdealDigree[1])
   most_ideally_combination_idx = idx_and_IdealDegree[0][0]
 
   # pop()で要素を取り出すとindexが切り詰められるので、末尾からpop()する
@@ -70,6 +70,7 @@ def _team_assign(players):
   team1 = [players.pop(idx) for idx in mici]
   team2 = players
 
+  # レート高い順でソート
   team1.sort(key=lambda player: player[1], reverse=True)
   team2.sort(key=lambda player: player[1], reverse=True)
 
